@@ -15,5 +15,6 @@ MEM_TOTAL=$(grep MemTotal /proc/meminfo | awk '{print $2}')
 MEM_AVAILABLE=$(grep MemAvailable /proc/meminfo | awk '{print $2}')
 MEM_USED=$((MEM_TOTAL - MEM_AVAILABLE))
 MEM_USED_PERCENT=$((MEM_USED * 100 / MEM_TOTAL))
+UPTIME=$(uptime -p)
 
-echo "$TIMESTAMP | CPU load: $CPU_LOAD | RAM used: ${MEM_USED_PERCENT}%" >> "$LOG_FILE"
+echo "$TIMESTAMP | CPU load: $CPU_LOAD | RAM used: ${MEM_USED_PERCENT}% | Uptime: $UPTIME" >> "$LOG_FILE"

@@ -1,18 +1,18 @@
-FROM python:3.12-slim AS base
+FROM python:3.12-slim
 
-ENV PYTHONDOWNTWRITEBYTECODE=1 \
+ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-WORKDIF /app
+WORKDIR /app
 
-RUN apt-get update && apt-get install -y --no-install-recomends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app/ ./app/
+COPY tasks_app/ ./tasks_app/
 
 RUN useradd -m appuser
 USER appuser
@@ -24,6 +24,5 @@ ARG GIT_COMMIT=unknown
 ENV APP_VERSION=${APP_VERSION}
 ENV GIT_COMMIT=${GIT_COMMIT}
 
-WORKDIR /app/app
+CMD ["python", "tasks_app/tasks_app.py"]
 
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]

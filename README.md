@@ -1,69 +1,162 @@
-# DevOps Labs – Raspberry Pi Learning Environment
+DevOps Labs – Raspberry Pi Learning Environment
 
-This repository contains my hands-on DevOps learning journey, fully executed on a Raspberry Pi 5 running Linux.  
-The goal is to build practical, production-like experience across the full DevOps toolchain, including automation, scripting, infrastructure, CI/CD, containers, and Kubernetes.
+A fully hands-on DevOps learning journey executed on Raspberry Pi 5.
+The goal: develop real, production-like DevOps experience by building automation, microservices, CI/CD pipelines, containerized apps, monitoring systems, and Kubernetes clusters — all running on actual ARM hardware.
 
----
+This repository evolves step-by-step into a full DevOps portfolio.
 
-## 📚 Repository Structure
-
+🚀 Repository Structure
 devops-labs/
 ├── phase-1-linux/
-│ └── labs/
-│ ├── lab1-basic-bash/
-│ └── lab2-git-workflow/ (coming soon)
-├── phase-2-docker/ (coming soon)
-├── phase-3-kubernetes/ (K3s cluster – coming soon)
-├── phase-4-terraform/ (coming soon)
-└── phase-5-monitoring/ (coming soon)
+│   └── labs/
+│       ├── lab1-basic-bash/
+│       └── lab2-git-workflow/
+│
+├── phase-2-docker/
+│   └── lab4-flask-postgres/   ← Multi-service Python app (Users + Tasks + Postgres)
+│       ├── users-api
+│       ├── tasks-api
+│       ├── database (Postgres)
+│       └── metrics + load testing endpoints
+│
+├── phase-3-kubernetes/        (K3s cluster – coming soon)
+├── phase-4-terraform/         (Infrastructure as Code – coming soon)
+└── phase-5-monitoring/        (Prometheus + Grafana + Loki – coming soon)
 
-yaml
-Copy code
+🎯 Project Purpose
 
----
+This repository acts as a DevOps sandbox, built to simulate real-world scenarios:
 
-## 🧩 Purpose
+✔ Linux administration (filesystems, boot configuration, services)
+✔ Bash scripting & automation
+✔ Git workflow (branches, PRs, feature isolation)
+✔ Docker & multi-container environments
+✔ Microservices architecture on ARM
+✔ CI/CD using GitHub Actions
+✔ Kubernetes (K3s on Raspberry Pi)
+✔ Infrastructure as Code (Terraform)
+✔ Monitoring & Observability (Prometheus, Grafana, Loki)
+✔ Logging, metrics, health checks, service load testing
 
-This project serves as a long-term DevOps sandbox where I practice:
+Everything here is built as if preparing for a DevOps Engineer role, with real workflows, real projects, real tools.
 
-- Linux administration  
-- Bash scripting & automation  
-- Git branching workflows  
-- Docker containerization  
-- Kubernetes (K3s on Raspberry Pi)  
-- Infrastructure as Code (Terraform)  
-- CI/CD pipelines (GitHub Actions)  
-- Monitoring & logging (Prometheus, Grafana, Loki)  
-- Real-world DevOps practices  
+🧪 Completed Labs
+### ✔ Lab 1 – Basic Bash System Monitor
 
----
+Path: phase-1-linux/labs/lab1-basic-bash/
+A Bash script that logs CPU and RAM usage with timestamps.
+Covers: cron-like scheduling, Linux metrics, logging formats, shell scripting.
 
-## 🧪 Completed Labs
+✔ Lab 2 – Git Workflow Foundations
 
-### ✔ **Lab 1 – Basic Bash System Monitor**
-Path: `phase-1-linux/labs/lab1-basic-bash/`
+Path: phase-1-linux/labs/lab2-git-workflow/
+Feature branches, commits, merging, branch cleanup, SSH authentication.
 
-A simple Linux monitoring script that logs CPU load and RAM usage into a timestamped logfile.  
-Built to practice Bash, system metrics, logging, and foundational automation.
+✔ Lab 4 – Docker Multi-Service Application (Python + Postgres)
 
----
+Path: phase-2-docker/lab4-flask-postgres/
 
-## 🚀 Upcoming Labs
+A production-like microservices setup:
 
-- Git workflow (feature branches, PRs, merges)
-- Docker fundamentals
-- Deploying applications with Docker Compose
-- Building a local Kubernetes cluster using K3s
-- Service deployment using Helm
-- GitHub Actions CI/CD pipeline deploying to the Raspberry Pi
-- Infrastructure as Code with Terraform
-- Monitoring stack setup (Prometheus + Grafana + Loki)
+🟦 Users API (Flask)
 
----
+Create/list users
 
-## 🧠 About This Project
+Health check
 
-This repository is part of my structured DevOps learning roadmap.  
-All labs are executed **on real hardware (Raspberry Pi 5)** to stay close to production environments and avoid artificial “toy” examples.
+Version endpoint
 
-More labs, documentation, and automation will be added continuously as the journey progresses.
+Metrics endpoint (uptime, CPU, RAM, total users)
+
+Load generator for stress testing
+
+🟪 Tasks API (Flask)
+
+Create / update / delete tasks
+
+Linked to users via foreign key
+
+Health, version, metrics, load endpoints
+
+🟩 Postgres Database (16 Alpine)
+
+Shared DB for both APIs
+
+🟧 Adminer
+
+In-browser DB GUI at port 8084
+
+🟡 Docker Compose Orchestration
+All services run together with isolated containers and shared networks.
+
+This lab demonstrates:
+
+containerization
+
+service discovery
+
+DB migrations
+
+metrics + observability
+
+handling load
+
+building & running ARM64 images
+
+🔮 Upcoming Labs (already planned)
+Phase 2 – Docker (continuation)
+
+Docker networking & volumes
+
+Container health checks
+
+CI build automation
+
+Secure Dockerfiles
+
+Phase 3 – Kubernetes (K3s on Raspberry Pi)
+
+Deploy microservices to a real cluster
+
+Services, Deployments, Ingress
+
+Helm charts
+
+Secrets & ConfigMaps
+
+Rolling updates
+
+Phase 4 – Terraform
+
+Automating infrastructure provisioning
+
+Raspberry Pi + cloud hybrid deployment
+
+Phase 5 – Monitoring & Logging
+
+Prometheus node + exporters
+
+Grafana dashboards
+
+Loki log aggregation
+
+Alertmanager rules
+
+🧠 Why Raspberry Pi?
+
+Real ARM Linux environment
+
+Forces you to work like in cloud-native teams (ARM is used at scale)
+
+No “simulated DevOps” — everything is real
+
+Great platform for Kubernetes, Docker, networking labs
+
+This repo serves as a true DevOps playground designed to grow into a full, production-like ecosystem.
+
+📌 Status
+
+This repository is actively developed.
+New labs and upgrades are added as the learning roadmap progresses.
+
+Follow commits & branches for continuous evolution.

@@ -49,4 +49,3 @@ jobs:
           tags: |
             ghcr.io/baykushevi/devops-labs/tasks-api:latest
             ghcr.io/baykushevi/devops-labs/tasks-api:${{ github.ref_name }}
-

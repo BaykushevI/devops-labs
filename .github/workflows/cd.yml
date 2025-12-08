@@ -31,7 +31,8 @@ jobs:
       - name: Build & push users-api image
         uses: docker/build-push-action@v6
         with:
-          context: ./phase-2-docker/lab4-flask-postgres/users-api
+          context: ./phase-2-docker/lab4-flask-postgres
+          file: ./phase-2-docker/lab4-flask-postgres/Dockerfile.users
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
@@ -41,7 +42,8 @@ jobs:
       - name: Build & push tasks-api image
         uses: docker/build-push-action@v6
         with:
-          context: ./phase-2-docker/lab4-flask-postgres/tasks-api
+          context: ./phase-2-docker/lab4-flask-postgres
+          file: ./phase-2-docker/lab4-flask-postgres/Dockerfile.tasks
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |

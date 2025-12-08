@@ -14,6 +14,9 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
+    env:
+      OWNER_LC: ${{ toLower(github.repository_owner) }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -28,15 +31,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Build & push users-api image
+      - name: Build & push users-api image
         uses: docker/build-push-action@v6
         with:
           context: ./phase-2-docker/lab4-flask-postgres/users-api
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ghcr.io/${{ toLower(github.repository_owner) }}/devops-labs/users-api:latest
-            ghcr.io/${{ toLower(github.repository_owner) }}/devops-labs/users-api:${{ github.ref_name }}
+            ghcr.io/${{ env.OWNER_LC }}/devops-labs/users-api:latest
+            ghcr.io/${{ env.OWNER_LC }}/devops-labs/users-api:${{ github.ref_name }}
 
       - name: Build & push tasks-api image
         uses: docker/build-push-action@v6
@@ -45,6 +48,6 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ghcr.io/${{ toLower(github.repository_owner) }}/devops-labs/tasks-api:latest
-            ghcr.io/${{ toLower(github.repository_owner) }}/devops-labs/tasks-api:${{ github.ref_name }}
+            ghcr.io/${{ env.OWNER_LC }}/devops-labs/tasks-api:latest
+            ghcr.io/${{ env.OWNER_LC }}/devops-labs/tasks-api:${{ github.ref_name }}
 

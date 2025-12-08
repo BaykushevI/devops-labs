@@ -1,0 +1,55 @@
+name: CI - Lab 4 Flask + Postgres
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  lab4-ci:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: phase-2-docker/lab4-flask-postgres
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python (for future tests, optional)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Show Docker version
+        run: |
+          docker version
+          docker compose version || echo "compose plugin info above"
+
+      - name: Build Docker images (users, tasks, postgres, adminer)
+        run: |
+          docker compose build
+
+      - name: Start Lab 4 stack
+        run: |
+          docker compose up -d
+          echo "Waiting for services to come up..."
+          sleep 20
+
+      - name: Smoke test - Users API health
+        run: |
+          curl -v --fail http://localhost:8081/health
+
+      - name: Smoke test - Tasks API health
+        run: |
+          curl -v --fail http://localhost:8082/health
+
+      - name: Show running containers
+        run: docker ps
+
+      - name: Tear down stack
+        if: always()
+        run: docker compose down
+

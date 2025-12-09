@@ -16,23 +16,31 @@ services:
     image: ghcr.io/baykushevi/devops-labs/users-api:latest
     container_name: lab4-users-api
     restart: unless-stopped
+    depends_on:
+      - postgres
     environment:
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_NAME=${POSTGRES_DB}
-      - DB_USER=${POSTGRES_USER}
-      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      DB_HOST: lab4-postgres
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "8081:5000"
 
   tasks-api:
     image: ghcr.io/baykushevi/devops-labs/tasks-api:latest
     container_name: lab4-tasks-api
     restart: unless-stopped
+    depends_on:
+      - postgres
     environment:
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_NAME=${POSTGRES_DB}
-      - DB_USER=${POSTGRES_USER}
-      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      DB_HOST: lab4-postgres
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "8082:5000"
 
   adminer:
     image: adminer:latest
@@ -41,8 +49,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - "${ADMINER_PORT}:8080"
+      - "${ADMINER_PORT:-8084}:8080"
 
 volumes:
   lab4_postgres_data:
-

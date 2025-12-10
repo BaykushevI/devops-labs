@@ -18,27 +18,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python (for future tests, optional)
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install linting tools
-        run: |
-          pip install black flake8 pytest
-
-      - name: Run black (format check)
-        run: |
-          black --check .
-
-      - name: Run flake8
-        run: |
-          flake8 .
-
-      - name: Install test dependencies (pytest + requests)
+      - name: Install linting and test tools
         run: |
           python -m pip install --upgrade pip
-          pip install pytest requests
+          python -m pip install black flake8 pytest pytest-cov requests
+
+      - name: Run black (format check)
+        run: black --check .
+
+      - name: Run flake8
+        run: flake8 .
 
       - name: Show Docker version
         run: |
@@ -46,8 +40,7 @@ jobs:
           docker compose version || echo "compose plugin info above"
 
       - name: Build Docker images (users, tasks, postgres, adminer)
-        run: |
-          docker compose build
+        run: docker compose build
 
       - name: Start Lab 4 stack
         run: |
@@ -56,12 +49,10 @@ jobs:
           sleep 20
 
       - name: Smoke test - Users API health
-        run: |
-          curl -v --fail http://localhost:8081/health
+        run: curl -v --fail http://localhost:8081/health
 
       - name: Smoke test - Tasks API health
-        run: |
-          curl -v --fail http://localhost:8082/health
+        run: curl -v --fail http://localhost:8082/health
 
       - name: Run API tests with coverage
         run: |

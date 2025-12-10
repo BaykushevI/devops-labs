@@ -2,3 +2,7 @@ venv/
 __pycache__/
 *.pyc
 *.log
+.coverage
+coverage.xml
+coverage_html/
+htmlcov/

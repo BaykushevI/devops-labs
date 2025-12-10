@@ -63,11 +63,18 @@ jobs:
         run: |
           curl -v --fail http://localhost:8082/health
 
-      - name: Run API tests with pytest
-        # override default working dir to go in tests/
-        working-directory: phase-2-docker/lab4-flask-postgres/tests
+      - name: Run API tests with coverage
         run: |
-          pytest -v
+          pytest tests -v \
+            --cov=. \
+            --cov-report=term-missing \
+            --cov-report=html:coverage_html
+
+      - name: Upload coverage HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab4-coverage-html
+          path: phase-2-docker/lab4-flask-postgres/coverage_html
 
       - name: Show running containers
         run: docker ps
@@ -75,4 +82,3 @@ jobs:
       - name: Tear down stack
         if: always()
         run: docker compose down
-

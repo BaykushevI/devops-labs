@@ -23,6 +23,11 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install test dependencies (pytest + requests)
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest requests
+
       - name: Show Docker version
         run: |
           docker version
@@ -45,6 +50,12 @@ jobs:
       - name: Smoke test - Tasks API health
         run: |
           curl -v --fail http://localhost:8082/health
+
+      - name: Run API tests with pytest
+        # override default working dir to go in tests/
+        working-directory: phase-2-docker/lab4-flask-postgres/tests
+        run: |
+          pytest -v
 
       - name: Show running containers
         run: docker ps

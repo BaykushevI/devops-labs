@@ -35,7 +35,8 @@ def get_db_connection():
 def ensure_tasks_table():
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute("""
+    cur.execute(
+        """
         CREATE TABLE IF NOT EXISTS tasks (
             id SERIAL PRIMARY KEY,
             title TEXT NOT NULL,
@@ -43,7 +44,8 @@ def ensure_tasks_table():
             status TEXT NOT NULL DEFAULT 'open',
             user_id INTEGER REFERENCES users(id) ON DELETE SET NULL
         );
-    """)
+    """
+    )
     conn.commit()
     cur.close()
     conn.close()
@@ -67,11 +69,9 @@ def health():
 
 @app.route("/version", methods=["GET"])
 def version():
-    return jsonify({
-        "service": "tasks-api",
-        "app_version": APP_VERSION,
-        "git_commit": GIT_COMMIT
-    })
+    return jsonify(
+        {"service": "tasks-api", "app_version": APP_VERSION, "git_commit": GIT_COMMIT}
+    )
 
 
 @app.route("/tasks", methods=["GET"])
@@ -79,11 +79,13 @@ def list_tasks():
     ensure_tasks_table()
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute("""
+    cur.execute(
+        """
         SELECT id, title, description, status, user_id
         FROM tasks
         ORDER BY id;
-    """)
+    """
+    )
     tasks = cur.fetchall()
     cur.close()
     conn.close()
@@ -241,13 +243,10 @@ def load():
     while time.time() < end_time:
         _ = sum(i * i for i in range(5000))
 
-    return jsonify({
-        "service": "tasks-api",
-        "status": "ok",
-        "load_generated_seconds": seconds
-    })
+    return jsonify(
+        {"service": "tasks-api", "status": "ok", "load_generated_seconds": seconds}
+    )
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.getenv("BACKEND_PORT", "5000")))
-

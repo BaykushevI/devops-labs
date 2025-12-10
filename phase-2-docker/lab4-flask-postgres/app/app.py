@@ -40,13 +40,15 @@ def ensure_users_table():
     """Create table if missing."""
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute("""
+    cur.execute(
+        """
         CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
             name TEXT NOT NULL,
             email TEXT NOT NULL UNIQUE
         );
-    """)
+    """
+    )
     conn.commit()
     cur.close()
     conn.close()
@@ -71,11 +73,9 @@ def health():
 
 @app.route("/version", methods=["GET"])
 def version():
-    return jsonify({
-        "service": "users-api",
-        "app_version": APP_VERSION,
-        "git_commit": GIT_COMMIT
-    })
+    return jsonify(
+        {"service": "users-api", "app_version": APP_VERSION, "git_commit": GIT_COMMIT}
+    )
 
 
 @app.route("/users", methods=["GET"])
@@ -175,12 +175,8 @@ def load():
     while time.time() < end_time:
         _ = sum(i * i for i in range(5000))
 
-    return jsonify({
-        "status": "ok",
-        "load_generated_seconds": seconds
-    })
+    return jsonify({"status": "ok", "load_generated_seconds": seconds})
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.getenv("BACKEND_PORT", "5000")))
-

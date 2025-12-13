@@ -55,4 +55,4 @@ jobs:
             -H "Content-Type: application/json" \
             -d '{"ref": "${{ github.ref }}"}'
         env:
-          WEBHOOK_URL: ${{ secrets.PI_WEBHOOK_URL }}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}

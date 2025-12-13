@@ -45,9 +45,9 @@ jobs:
           REPO_NAME: ${{ github.repository }}
         run: |
           echo "Triggering deployment for tag: $TAG_NAME"
-          curl -X POST "$WEBHOOK_URL" \
+          curl -f -X POST "$WEBHOOK_URL/deploy" \
             -H "Content-Type: application/json" \
-            -d "{\"tag\": \"$TAGN_NAME\", \"repo\": \"$REPO_NAME\"}"
+            -d "{\"tag\": \"$TAG_NAME\", \"repo\": \"$REPO_NAME\"}"
 
       - name: Tear down stack
         if: always()

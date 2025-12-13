@@ -6,3 +6,9 @@ __pycache__/
 coverage.xml
 coverage_html/
 htmlcov/
+actions-runner/
+_runner/
+_diag/
+
+# GitHub Actions self-hosted runner
+actions-runner/

@@ -13,10 +13,7 @@ services:
       - "${POSTGRES_PORT}:5432"
 
   users-api:
-    build:
-      context: .
-      dockerfile: Dockerfile.users
-    image: lab4-users-api:local
+    image: ghcr.io/baykushevi/devops-labs/users-api:${APP_TAG:-latest}
     container_name: lab4-users-api
     restart: unless-stopped
     depends_on:
@@ -31,10 +28,7 @@ services:
       - "8081:5000"
 
   tasks-api:
-    build:
-      context: .
-      dockerfile: Dockerfile.tasks
-    image: lab4-tasks-api:local
+    image: ghcr.io/baykushevi/devops-labs/tasks-api:${APP_TAG:-latest}
     container_name: lab4-tasks-api
     restart: unless-stopped
     depends_on:
@@ -59,3 +53,4 @@ services:
 
 volumes:
   lab4_postgres_data:
+

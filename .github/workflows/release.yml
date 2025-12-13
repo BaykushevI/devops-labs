@@ -1,0 +1,42 @@
+name: Realease - Lab 4 Flask + Postgres
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release-lab4:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: phase-2-docker/lab4-flask-postgres
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest requests
+
+      - name: Run API tests
+        run: pytest tests -v
+
+      - name: Trigger deployment webhook on Raspberry Pi
+        env:
+          WEBHOOK_URL: ${{ secrets.LAB4_WEBHOOK_URL }}
+          TAG_NAME: ${{ github.ref_name }}
+          REPO_NAME: ${{ github.repository }}
+        run: |
+          echo "Triggering deployment for tag: $TAG_NAME"
+          curl -X POST "$WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "{\"tag\": \"$TAGN_NAME\", \"repo\": \"$REPO_NAME\"}"

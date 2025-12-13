@@ -56,4 +56,3 @@ jobs:
             -d '{"ref": "${{ github.ref }}"}'
         env:
           WEBHOOK_URL: ${{ secrets.PI_WEBHOOK_URL }}
-

@@ -13,7 +13,7 @@ services:
       - "${POSTGRES_PORT}:5432"
 
   users-api:
-    image: ghcr.io/baykushevi/devops-labs/users-api:latest
+    image: ghcr.io/baykushevi/devops-labs/users-api:${APP_TAG:-lastest}
     container_name: lab4-users-api
     restart: unless-stopped
     depends_on:
@@ -28,7 +28,7 @@ services:
       - "8081:5000"
 
   tasks-api:
-    image: ghcr.io/baykushevi/devops-labs/tasks-api:latest
+    image: ghcr.io/baykushevi/devops-labs/tasks-api:${APP_TAG:-lastest}
     container_name: lab4-tasks-api
     restart: unless-stopped
     depends_on:

@@ -33,6 +33,7 @@ jobs:
 
       - name: Pull latest images and restart stack
         run: |
+          export APP_TAG="${{ github.ref_name }}"
           docker compose pull
           docker compose up -d
           docker ps

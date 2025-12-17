@@ -27,13 +27,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Login to GHCR
+      - name: Login to GHCR (pull)
         run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_USERNAME }}" --password-stdin
 
-      - name: Pull latest images and restart stack
+      - name: Pull tagged images and restart stack
+        env:
+          APP_TAG: ${{ github.ref_name }}
         run: |
-          export APP_TAG="${{ github.ref_name }}"
+          echo "Deploying tag: $APP_TAG"
+          export APP_TAG="$APP_TAG"
           docker compose -f docker-compose.prod.yml pull
           docker compose -f docker-compose.prod.yml up -d
           docker ps
@@ -46,4 +49,3 @@ jobs:
 
       - name: Smoke test - Tasks API health
         run: curl -v --fail http://localhost:8082/health
-
